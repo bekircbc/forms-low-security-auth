@@ -19,6 +19,7 @@ function App() {
 	const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
 	const [fieldLogin, setFieldLogin] = useState('');
 	const [fieldPassword, setFieldPassword] = useState('');
+	const [formMessage, setFormMessage] = useState('');
 
 	const saveToLocalStorage = () => {
 		if (displayKind !== '') {
@@ -75,7 +76,12 @@ function App() {
 
 	const handleSubmitButton = (e) => {
 		e.preventDefault();
-		console.log(fieldLogin, fieldPassword);
+		const hash = md5(fieldPassword);
+		if (fieldPassword === '8c6744c9d2ec2cb9e8885b54ff744d0') {
+			setUserIsLoggedIn(true);
+		} else {
+			setFormMessage(`Bad Login`);
+		}
 	};
 
 	const handleFieldLogin = (e) => {
@@ -107,6 +113,10 @@ function App() {
 				<form>
 					<fieldset>
 						<legend>Welcome</legend>
+						{formMessage !== '' && (
+							<div className="formMessage">{formMessage}</div>
+						)}
+
 						<div className="row">
 							<label htmlFor="login2">Login</label>
 							<input
